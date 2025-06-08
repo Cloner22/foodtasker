@@ -1,0 +1,53 @@
+{% extends 'restaurant/base.html' %}
+
+{% block title %}Meals{% endblock %}
+
+{%block body %}
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card shadow text-white mb-3 mt-5">
+            <div class="card-header text-center">
+                <h5 class="m-0 font-weight-bold text-black"> Meal </h5>
+            </div>
+            <div class="card-body">
+                <span class="float-right mb-3">
+                    <form method="post"action="{% url 'restaurant_add_meal' %}" style="display: inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-black">Add Meal</button>
+                    </form>
+                </span>
+
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for meal in meals %}
+                                <tr class="align-middle">
+                                    <th scope="row">{{ meal.id }}</th>
+                                    <td>
+                                        <a href="{% url 'restaurant_edit_meal' meal.id %}">{{ meal.name }}</a>
+                                    </td>
+                                    <td>{{ meal.short_description }}</td>
+                                    <td class="text-right">{{meal.price}} Rial</td>
+                                    <td class="text-center">
+                                       <img src="{{ meal.image.url}}" class="rounded" width="50" height="50" alt="">
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
